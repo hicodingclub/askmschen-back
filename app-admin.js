@@ -15,7 +15,7 @@ const meanRestExpress = require('@hicoder/express-core');
 const { GetEmailingManageRouter, MddsEmailer } = require('@hicoder/express-emailing');
 const awsConfFile = path.join(appRootPath.toString(), process.env.AWS_CONFIG_FILE_NAME || '.aws.conf.json');
 const emailer = new MddsEmailer(awsConfFile);
-setTimeout( () => {emailer.startDaemon()}, 20000 );
+setTimeout(() => { emailer.startDaemon() }, 20000);
 
 const emailInfoForAuth = {
     serverUrl: process.env.ADMIN_SERVER_URL || 'http://localhost:3001',
@@ -56,9 +56,8 @@ const emailingRouter = GetEmailingManageRouter("Emailing", authFuncs);
 // const academicsRouter = meanRestExpress.RestRouter(academicsDbDefinition, 'Academics', authFuncs);
 // academicsRouter.setEmailer(emailer, {}); // set the emailer instance for sending emails
 
-// for public models
-// const publicInfoDbDefinition = require('./models/publicInfo/index');
-// const publicInfoRouter = meanRestExpress.RestRouter(publicInfoDbDefinition, 'PublicInfo', authFuncs);
+const publicInfoDbDefinition = require('./models/publicInfo/index');
+const publicInfoRouter = meanRestExpress.RestRouter(publicInfoDbDefinition, 'PublicInfo', authFuncs);
 
 // file server
 const fileSvr = require('@hicoder/express-file-server');
@@ -75,7 +74,7 @@ const dbSOption = {
 const fileSvrRouter = fileSvr.ExpressRouter(defaultAdminSysDef, 'Files', authFuncs, fileSOption);
 
 // Authorization App Client. Call it after all meanRestExpress resources are generated.
-const manageModule = ['Users', 'Access', 'Roles', 'Files', 'EmailTemplates']; // the modules that manages
+const manageModule = ['Users', 'Access', 'Roles', 'Files', 'EmailTemplates', 'PublicInfo']; // the modules that manages
 // pass in authzRolesRouter so authApp can upload the managed role moduoes to authzRolesRouter
 authApp.run('local', 'app-key', 'app-secrete', authzRolesRouter, { 'roleModules': manageModule });
 
@@ -94,7 +93,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public-admin')));
 
 // app.use('/api/academics', academicsRouter);
-// app.use('/api/publicinfo', publicInfoRouter);
+app.use('/api/publicinfo', publicInfoRouter);
+
 app.use('/api/files', fileSvrRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/roles', authzRolesRouter);
