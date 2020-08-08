@@ -1,10 +1,10 @@
 const schema = require('./news');
 
 const brief = "signaturePicture title publishDate";
-const detail = "signaturePicture title publishDate content"; //sequence is critical for mraUI detailType 'post'
-const create = "title content signaturePicture";
-const edit = "title content signaturePicture";
-const textSearch = "title content"
+const detail = "signaturePicture title author publishDate content"; //sequence is critical for mraUI detailType 'post'
+const create = "title content author signaturePicture";
+const edit = "title content author signaturePicture";
+const textSearch = "title author content"
 const index = "title";
 
 const views = [brief, detail, create, edit, textSearch, index];
