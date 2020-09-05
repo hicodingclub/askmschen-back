@@ -1,9 +1,11 @@
-const mongoose = require('mongoose');
-
 let newsDef = require('./news-admin');
+let blogDef = require('./blog-admin');
+let subscriptionDef = require('./subscription-admin');
 
 const schemas = {
     'News': newsDef,
+    'Blog': blogDef,
+    'Subscription': subscriptionDef,
 };
 
 const config = {

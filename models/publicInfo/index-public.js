@@ -1,7 +1,13 @@
 let newsDef = require('./news-public');
+let blogDef = require('./blog-public');
+let subscriptionDef = require('./subscription-public');
+
+
 
 const schemas = {
     'News': newsDef,
+    'Blog': blogDef,
+    'Subscription': subscriptionDef,
 };
 
 const config = {
@@ -10,7 +16,8 @@ const config = {
 }
 
 const authz = {
-    'module-authz': { 'LoginUser': 'R', 'Anyone': 'R' }
+    'module-authz': { 'LoginUser': 'R', 'Anyone': 'R' },
+    'Subscription': { 'LoginUser': '', 'Anyone': 'C' }
 }
 
 const DB_CONFIG = {
