@@ -40,7 +40,7 @@ option = {
 const authRouter = authServer.GetDefaultAuthnRouter(authAccountDef, option);
 authRouter.setEmailer(emailer, emailInfoForAuth); // set the emailer instance for sending emails
 
-const authzAccessRouter = authServer.GetDefaultAccessManageRouter('Access', authFuncs); // manage public access module
+const authzAccessRouter = authServer.GetDefaultUserRolesManageRouter('Roles', authFuncs); // manage public access module
 const authzRolesRouter = authServer.GetDefaultRolesManageRouter('Roles', authFuncs); // manage admin roles module
 authzRolesRouter.setEmailer(emailer, {});
 

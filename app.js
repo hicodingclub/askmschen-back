@@ -24,7 +24,7 @@ const emailInfoForAuth = {
 
 // for auth client
 let option = {
-    authz: 'group', // user group based authorization
+    authz: 'role', // user role based authorization
 };
 const AuthApp = require('@hicoder/express-auth-app');
 const authApp = new AuthApp();
@@ -33,11 +33,13 @@ const authFuncs = authApp.getAuthFuncs(option);
 const authServer = require('@hicoder/express-auth-server');
 const defaultUserDef = authServer.authUserDef;
 option = {
-    authz: 'group', // user group based authorization
+    authz: 'role', // user role based authorization
+    authzModel: 'user', // generate default authorization module based on 'user'.
     registerEmailVerification: true,
 };
 const authRouter = authServer.GetDefaultAuthnRouter(defaultUserDef, option);
 authRouter.setEmailer(emailer, emailInfoForAuth); // set the emailer instance for sending emails
+
 const usersRouter = meanRestExpress.RestRouter(defaultUserDef, 'Users', authFuncs);
 
 //for academics models
@@ -63,12 +65,12 @@ const fileSvrRouter = fileSvr.ExpressRouter(defaultAdminSysDef, 'Files', authFun
 
 // this is special: we only get the router, but will only use it internally for authApp to pass managed access modules to it.
 // there is no external routing path defined for it because we don't manage public access in public facing app.
-const authzAccessRouter = authServer.GetDefaultAccessManageRouter('Internal-Access', authFuncs); // public access module
+const authzRolesRouter = authServer.GetDefaultUserRolesManageRouter('Internal-Roles', authFuncs); // user roles module
 
 //Authorization App Client. Call it after all meanRestExpress resources are generated.
 const publicModules = ['Users', 'Files', 'PublicInfo']; // the modules that for public access
 //pass in authzAccessRouter so authApp can upload the managed role modules to authzAccessRouter
-authApp.run('local', 'app-key', 'app-secrete', authzAccessRouter, { 'accessModules': publicModules });
+authApp.run('local', 'app-key', 'app-secrete', authzRolesRouter, { 'roleModules': publicModules });
 
 const app = express();
 
