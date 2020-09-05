@@ -1,6 +1,6 @@
 const schema = require('./blog');
 
-const brief = "signaturePicture title publishDate";
+const brief = "signaturePicture | title | publishDate | topicTags";
 const detail = "signaturePicture title author publishDate content topicTags"; //sequence is critical for mraUI detailType 'post'
 const create = "title content author signaturePicture topicTags hot";
 const edit = "title content author signaturePicture topicTags hot";
@@ -41,5 +41,10 @@ module.exports = {
                     listCategoryField: 'topicTags',
                 }]
         */
+    },
+    mraBE: {
+        valueSearchFields: [
+            'topicTags',
+        ]
     },
 };
