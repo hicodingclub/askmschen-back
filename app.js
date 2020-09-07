@@ -48,6 +48,8 @@ const usersRouter = meanRestExpress.RestRouter(defaultUserDef, 'Users', authFunc
 
 const publicInfoDbDefinition = require('./models/publicInfo/index-public');
 const publicInfoRouter = meanRestExpress.RestRouter(publicInfoDbDefinition, 'PublicInfo', authFuncs);
+const resourcesDbDefinition = require('./models/resources/index-public');
+const resourcesRouter = meanRestExpress.RestRouter(resourcesDbDefinition, 'Resources', authFuncs);
 
 //file server
 const fileSvr = require('@hicoder/express-file-server');
@@ -68,7 +70,7 @@ const fileSvrRouter = fileSvr.ExpressRouter(defaultAdminSysDef, 'Files', authFun
 const authzRolesRouter = authServer.GetDefaultUserRolesManageRouter('Internal-Roles', authFuncs); // user roles module
 
 //Authorization App Client. Call it after all meanRestExpress resources are generated.
-const publicModules = ['Users', 'Files', 'PublicInfo']; // the modules that for public access
+const publicModules = ['Users', 'Files', 'PublicInfo', 'Resources']; // the modules that for public access
 //pass in authzAccessRouter so authApp can upload the managed role modules to authzAccessRouter
 authApp.run('local', 'app-key', 'app-secrete', authzRolesRouter, { 'roleModules': publicModules });
 
@@ -88,6 +90,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/api/academics', academicsRouter);
 app.use('/api/publicinfo', publicInfoRouter);
+app.use('/api/resources', resourcesRouter);
 
 app.use('/api/files', fileSvrRouter);
 app.use('/api/auth', authRouter);

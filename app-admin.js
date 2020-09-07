@@ -59,6 +59,9 @@ const emailingRouter = GetEmailingManageRouter("Emailing", authFuncs);
 const publicInfoDbDefinition = require('./models/publicInfo/index');
 const publicInfoRouter = meanRestExpress.RestRouter(publicInfoDbDefinition, 'PublicInfo', authFuncs);
 
+const resourcesDbDefinition = require('./models/resources/index');
+const resourcesRouter = meanRestExpress.RestRouter(resourcesDbDefinition, 'Resources', authFuncs);
+
 // file server
 const fileSvr = require('@hicoder/express-file-server');
 const defaultAdminSysDef = fileSvr.sampleAdminSysDef;
@@ -74,7 +77,7 @@ const dbSOption = {
 const fileSvrRouter = fileSvr.ExpressRouter(defaultAdminSysDef, 'Files', authFuncs, fileSOption);
 
 // Authorization App Client. Call it after all meanRestExpress resources are generated.
-const manageModule = ['Users', 'Access', 'Roles', 'Files', 'EmailTemplates', 'PublicInfo']; // the modules that manages
+const manageModule = ['Users', 'Access', 'Roles', 'Files', 'EmailTemplates', 'PublicInfo', 'Resources']; // the modules that manages
 // pass in authzRolesRouter so authApp can upload the managed role moduoes to authzRolesRouter
 authApp.run('local', 'app-key', 'app-secrete', authzRolesRouter, { 'roleModules': manageModule });
 
@@ -94,6 +97,7 @@ app.use(express.static(path.join(__dirname, 'public-admin')));
 
 // app.use('/api/academics', academicsRouter);
 app.use('/api/publicinfo', publicInfoRouter);
+app.use('/api/resources', resourcesRouter);
 
 app.use('/api/files', fileSvrRouter);
 app.use('/api/users', usersRouter);
