@@ -14,6 +14,13 @@ const schema = new Schema({
         mraSharable: true
     },
     topicTags: { type: [{ type: String }], required: false, textarea: false },
+
+    /*
+    resource: {
+        type: [{ type: String, mraType: 'file', mraSharable: false }],
+        required: true,
+    },
+    */
     hot: { type: Boolean, default: false },
 });
 
