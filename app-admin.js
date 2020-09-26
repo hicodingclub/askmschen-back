@@ -58,6 +58,7 @@ const emailingRouter = GetEmailingManageRouter("Emailing", authFuncs);
 
 const publicInfoDbDefinition = require('./models/publicInfo/index');
 const publicInfoRouter = meanRestExpress.RestRouter(publicInfoDbDefinition, 'PublicInfo', authFuncs);
+publicInfoRouter.setEmailer(emailer, {});
 
 // file server
 const fileSvr = require('@hicoder/express-file-server');
