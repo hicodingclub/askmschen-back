@@ -17,7 +17,22 @@ module.exports = {
     // patch: ['muser_id'], //field is member which is already defined, so no need to patch
     api: "C",
     mraUI: {
-        listType: 'table', // table, list, or grid
+        listWidgets: {
+            general: {
+              views: ['table'],
+            },
+            select: {
+              views: ['table',],
+            },
+            sub: {
+              views: ['table',],
+            }
+        },
+        listWidgetTypes: {
+            general: 'general',
+            select: 'select',
+            sub: 'sub',
+        },
 
         disableListSearch: true, // not show the search bar
         listActionButtons: ['', ''],

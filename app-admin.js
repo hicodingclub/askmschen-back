@@ -40,7 +40,7 @@ option = {
 const authRouter = authServer.GetDefaultAuthnRouter(authAccountDef, option);
 authRouter.setEmailer(emailer, emailInfoForAuth); // set the emailer instance for sending emails
 
-const authzAccessRouter = authServer.GetDefaultAccessManageRouter('Access', authFuncs); // manage public access module
+const authzAccessRouter = authServer.GetDefaultUserRolesManageRouter('Roles', authFuncs); // manage public access module
 const authzRolesRouter = authServer.GetDefaultRolesManageRouter('Roles', authFuncs); // manage admin roles module
 authzRolesRouter.setEmailer(emailer, {});
 
@@ -60,6 +60,9 @@ const publicInfoDbDefinition = require('./models/publicInfo/index');
 const publicInfoRouter = meanRestExpress.RestRouter(publicInfoDbDefinition, 'PublicInfo', authFuncs);
 publicInfoRouter.setEmailer(emailer, {});
 
+const resourcesDbDefinition = require('./models/resources/index');
+const resourcesRouter = meanRestExpress.RestRouter(resourcesDbDefinition, 'Resources', authFuncs);
+
 // file server
 const fileSvr = require('@hicoder/express-file-server');
 const defaultAdminSysDef = fileSvr.sampleAdminSysDef;
@@ -75,7 +78,7 @@ const dbSOption = {
 const fileSvrRouter = fileSvr.ExpressRouter(defaultAdminSysDef, 'Files', authFuncs, fileSOption);
 
 // Authorization App Client. Call it after all meanRestExpress resources are generated.
-const manageModule = ['Users', 'Access', 'Roles', 'Files', 'EmailTemplates', 'PublicInfo']; // the modules that manages
+const manageModule = ['Users', 'Access', 'Roles', 'Files', 'EmailTemplates', 'PublicInfo', 'Resources']; // the modules that manages
 // pass in authzRolesRouter so authApp can upload the managed role moduoes to authzRolesRouter
 authApp.run('local', 'app-key', 'app-secrete', authzRolesRouter, { 'roleModules': manageModule });
 
@@ -95,6 +98,7 @@ app.use(express.static(path.join(__dirname, 'public-admin')));
 
 // app.use('/api/academics', academicsRouter);
 app.use('/api/publicinfo', publicInfoRouter);
+app.use('/api/resources', resourcesRouter);
 
 app.use('/api/files', fileSvrRouter);
 app.use('/api/users', usersRouter);

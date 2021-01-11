@@ -13,7 +13,14 @@ const schema = new Schema({
         mraType: 'picture',
         mraSharable: true
     },
-    topicTags: { type: [{ type: String }], required: false, textarea: false },
+    topicTags: { type: [{ type: String }], required: false, },
+
+    /*
+    resource: {
+        type: [{ type: String, mraType: 'file', mraSharable: false }],
+        required: true,
+    },
+    */
     hot: { type: Boolean, default: false },
 });
 
