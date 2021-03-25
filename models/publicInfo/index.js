@@ -1,16 +1,18 @@
 let newsDef = require('./news-admin');
 let blogDef = require('./blog-admin');
 let subscriptionDef = require('./subscription-admin');
+let questionDef = require('./question-admin');
 
 const schemas = {
     'News': newsDef,
     'Blog': blogDef,
     'Subscription': subscriptionDef,
+    'Question': questionDef,
 };
 
 const config = {
     dateFormat: 'MM-DD-YYYY',
-    timeFormat: 'hh:mm:ss'
+    timeFormat: 'hh:mm:ss',
 }
 
 const authz = {

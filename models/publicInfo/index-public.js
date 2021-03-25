@@ -1,6 +1,8 @@
 let newsDef = require('./news-public');
 let blogDef = require('./blog-public');
 let subscriptionDef = require('./subscription-public');
+let questionDef = require('./question-public');
+
 
 
 
@@ -8,6 +10,7 @@ const schemas = {
     'News': newsDef,
     'Blog': blogDef,
     'Subscription': subscriptionDef,
+    'Question': questionDef,
 };
 
 const config = {
