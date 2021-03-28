@@ -14,6 +14,8 @@ const schema = new Schema({
             message: 'Please fill a valid email address',
         },
     },
+}, {
+    timestamps: true
 });
 
 module.exports = schema;

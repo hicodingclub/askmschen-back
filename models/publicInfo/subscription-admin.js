@@ -1,7 +1,7 @@
 const schema = require('./subscription');
 
-var brief = "name email";
-var detail = "name email";
+var brief = "name email createdAt[Created At]";
+var detail = "name email createdAt[Created At]";
 var create = "name email";
 var edit = "name email";
 var textSearch = "name email";
